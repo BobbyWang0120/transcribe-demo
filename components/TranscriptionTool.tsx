@@ -44,8 +44,8 @@ export default function TranscriptionTool() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const audioFile = acceptedFiles[0]
     if (audioFile) {
-      if (audioFile.size > 25 * 1024 * 1024) { // 25MB 限制
-        toast.error('文件大小不能超过 25MB')
+      if (audioFile.size > 69 * 1024 * 1024) { // 69MB 限制
+        toast.error('文件大小不能超过 69MB')
         return
       }
       setTranscriptionState(prev => ({ ...prev, file: audioFile }))
@@ -124,7 +124,7 @@ export default function TranscriptionTool() {
           <input {...getInputProps()} />
           <Upload className="mx-auto h-12 w-12 text-gray-400" />
           <p className="mt-2">拖放音频文件到这里，或点击选择文件</p>
-          <p className="text-sm text-gray-500 mt-1">支持 MP3, WAV, M4A 格式，最大 25MB</p>
+          <p className="text-sm text-gray-500 mt-1">支持 MP3, WAV, M4A 格式，最大 69MB</p>
         </div>
       ) : (
         <div className="border rounded-lg p-6 bg-gray-50">
