@@ -2,9 +2,9 @@ import { getAudioDurationInSeconds } from 'get-audio-duration'
 
 export async function getAudioDuration(buffer: Buffer): Promise<number> {
   try {
-    // 创建临时文件对象
-    const file = new File([buffer], 'temp.mp3', { type: 'audio/mpeg' })
-    const url = URL.createObjectURL(file)
+    // 创建临时 Blob URL
+    const blob = new Blob([buffer], { type: 'audio/mpeg' })
+    const url = URL.createObjectURL(blob)
     
     try {
       const seconds = await getAudioDurationInSeconds(url)

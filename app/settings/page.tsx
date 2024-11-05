@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { UserSettings } from '@/components'
 import Link from 'next/link'
@@ -25,7 +25,7 @@ export default async function SettingsPage() {
             返回主页
           </Link>
         </div>
-        <UserSettings userId={session.user.id} />
+        <UserSettings />
       </div>
     </main>
   )

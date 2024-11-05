@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import TranscriptionTool from '@/components/TranscriptionTool'
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import UserNav from '@/components/UserNav'
 import Link from 'next/link'
 
