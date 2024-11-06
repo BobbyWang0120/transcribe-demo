@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    const { email, password, name } = await request.json()
 
     // 检查邮箱是否已存在
     const existingUser = await prisma.user.findUnique({
@@ -26,13 +26,15 @@ export async function POST(request: Request) {
       data: {
         email,
         password: hashedPassword,
+        name,
       }
     })
 
     return NextResponse.json({
       user: {
         id: user.id,
-        email: user.email
+        email: user.email,
+        name: user.name,
       }
     })
   } catch (err) {

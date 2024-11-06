@@ -3,7 +3,7 @@ import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { UserSettings } from '@/components'
 import Link from 'next/link'
-import { Home } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions)
@@ -15,15 +15,14 @@ export default async function SettingsPage() {
   return (
     <main className="min-h-screen p-4 md:p-8">
       <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">用户设置</h1>
+        <div className="flex items-center space-x-4 mb-8">
           <Link
             href="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-700"
+            className="text-gray-600 hover:text-gray-900"
           >
-            <Home className="h-4 w-4 mr-2" />
-            返回主页
+            <ArrowLeft className="h-5 w-5" />
           </Link>
+          <h1 className="text-xl font-normal">用户设置</h1>
         </div>
         <UserSettings />
       </div>

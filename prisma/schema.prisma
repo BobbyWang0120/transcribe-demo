@@ -9,38 +9,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String       @id @default(cuid())
+  email         String      @unique
   password      String
   name          String?
-  image         String?
-  isPremium     Boolean   @default(false)
-  lastPayment   DateTime? // 最近一次付费时间
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
+  isPremium     Boolean     @default(false)
+  lastPayment   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   sessions      Session[]
   transcripts   Transcript[]
   usageRecords  UsageRecord[]
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
 }
 
 model Session {
@@ -52,19 +31,20 @@ model Session {
 }
 
 model Transcript {
-  id           String   @id @default(cuid())
-  userId       String
-  audioUrl     String
-  text         String   @db.Text
-  audioDuration Float    // 音频时长（分钟）
-  createdAt    DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String   @id @default(cuid())
+  userId        String
+  audioUrl      String   // 音频文件名
+  audioBlobUrl  String   // Vercel Blob URL
+  text          String   @db.Text
+  audioDuration Float
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UsageRecord {
   id           String   @id @default(cuid())
   userId       String
-  minutes      Float    // 使用的分钟数
+  minutes      Float
   createdAt    DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 } 

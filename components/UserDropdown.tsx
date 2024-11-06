@@ -28,7 +28,7 @@ export default function UserDropdown({ session }: { session: Session }) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
       >
-        <span>{session.user.email}</span>
+        <span className="text-sm font-medium">{session.user.name || '用户'}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 

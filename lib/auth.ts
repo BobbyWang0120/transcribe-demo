@@ -9,6 +9,7 @@ declare module "next-auth" {
     user: {
       id: string;
       email: string;
+      name?: string | null;
     }
   }
 }
@@ -47,6 +48,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
+          name: user.name,
         }
       }
     })
@@ -61,14 +63,16 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub
+      if (session.user) {
+        session.user.id = token.sub!
+        session.user.name = token.name as string | null
       }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
+        token.name = user.name
       }
       return token
     }

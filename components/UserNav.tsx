@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Session } from 'next-auth'
 import toast from 'react-hot-toast'
 import UserDropdown from './UserDropdown'
+import { Clock } from 'lucide-react'
 
 export default function UserNav({ session }: { session: Session | null }) {
   const [remainingMinutes, setRemainingMinutes] = useState<number | null>(null)
@@ -49,11 +50,11 @@ export default function UserNav({ session }: { session: Session | null }) {
 
   return (
     <div className="flex items-center space-x-4">
-      <div className="text-sm">
-        <span className="text-gray-500">剩余时长：</span>
+      <div className="flex items-center text-sm">
+        <Clock className="h-4 w-4 text-gray-500 mr-1" />
         <span className="font-medium">
           {isLoading ? (
-            <span className="text-gray-400">加载中...</span>
+            <span className="text-gray-400">...</span>
           ) : (
             `${remainingMinutes ?? 0}分钟`
           )}

@@ -8,11 +8,6 @@ const nextConfig = {
       config.devtool = 'source-map'
     }
     return config
-  },
-  api: {
-    bodyParser: {
-        sizeLimit: '69mb'
-    }
   }
 }
 

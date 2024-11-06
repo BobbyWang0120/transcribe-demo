@@ -103,9 +103,9 @@ export default function UserSettings() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4">基本信息</h2>
+    <div className="space-y-6">
+      <div className="bg-gray-50 p-6 rounded-lg">
+        <h2 className="text-xl font-medium mb-4">基本信息</h2>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">邮箱</label>
@@ -122,8 +122,8 @@ export default function UserSettings() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-4">修改密码</h2>
+      <div className="bg-gray-50 p-6 rounded-lg">
+        <h2 className="text-xl font-medium mb-4">修改密码</h2>
         <form onSubmit={handlePasswordChange} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">当前密码</label>
@@ -132,7 +132,7 @@ export default function UserSettings() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900"
             />
           </div>
           <div>
@@ -143,7 +143,7 @@ export default function UserSettings() {
               onChange={(e) => setNewPassword(e.target.value)}
               required
               minLength={6}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900"
             />
           </div>
           <div>
@@ -154,25 +154,25 @@ export default function UserSettings() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={6}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900"
             />
           </div>
           <button
             type="submit"
             disabled={isChangingPassword}
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
+            className="w-full py-2 px-4 bg-gray-900 text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:bg-gray-400"
           >
             {isChangingPassword ? '修改中...' : '修改密码'}
           </button>
         </form>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold text-red-600 mb-4">危险操作</h2>
+      <div className="bg-gray-50 p-6 rounded-lg">
+        <h2 className="text-xl font-medium text-red-600 mb-4">危险操作</h2>
         <button
           onClick={handleDeleteAccount}
           disabled={isDeletingAccount}
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-gray-400"
+          className="w-full py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-gray-400"
         >
           {isDeletingAccount ? '删除中...' : '删除账号'}
         </button>

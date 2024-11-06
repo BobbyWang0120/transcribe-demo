@@ -36,17 +36,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '未授权' }, { status: 401 })
     }
 
-    const formData = await request.formData()
-    const file = formData.get('file') as File
+    const { blobUrl, fileName } = await request.json()
     
-    if (!file) {
+    if (!blobUrl) {
       return NextResponse.json({ error: '未找到文件' }, { status: 400 })
     }
 
+    // 从 Blob URL 获取文件
+    const response = await fetch(blobUrl)
+    const blob = await response.blob()
+    const buffer = Buffer.from(await blob.arrayBuffer())
+
     // 调用 OpenAI API 获取详细的转录结果
-    const buffer = Buffer.from(await file.arrayBuffer())
     const transcription = await openai.audio.transcriptions.create({
-      file: new File([buffer], file.name, { type: file.type }),
+      file: new File([buffer], fileName, { type: blob.type }),
       model: 'whisper-1',
       response_format: 'verbose_json'
     }) as unknown as WhisperResponse
@@ -63,7 +66,8 @@ export async function POST(request: Request) {
     await prisma.transcript.create({
       data: {
         userId: session.user.id,
-        audioUrl: file.name,
+        audioUrl: fileName,
+        audioBlobUrl: blobUrl,
         text: transcription.text,
         audioDuration: durationInMinutes,
       },
