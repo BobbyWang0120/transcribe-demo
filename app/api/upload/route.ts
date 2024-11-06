@@ -44,8 +44,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               pathname: blob.pathname,
             })
           }
-        } catch (err) {
-          console.error('处理上传完成事件失败:', err)
+        } catch {
           throw new Error('处理上传完成事件失败')
         }
       },
@@ -53,9 +52,8 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json(jsonResponse)
   } catch (err) {
-    console.error('上传失败:', err)
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : '上传失败' },
+      { error: (err as Error).message },
       { status: 400 }
     )
   }

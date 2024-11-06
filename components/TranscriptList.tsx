@@ -27,9 +27,8 @@ export default function TranscriptList() {
         if (!response.ok) throw new Error('获取历史记录失败')
         const data = await response.json()
         setTranscripts(data.transcripts)
-      } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : '获取历史记录失败'
-        console.error('获取历史记录失败:', message)
+      } catch {
+        console.error('获取历史记录失败')
         toast.error('获取历史记录失败')
       } finally {
         setIsLoading(false)
@@ -74,8 +73,7 @@ export default function TranscriptList() {
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
-    } catch (error) {
-      console.error('下载音频失败:', error)
+    } catch {
       toast.error('下载音频失败')
     }
   }

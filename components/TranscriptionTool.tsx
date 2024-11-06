@@ -3,8 +3,8 @@
 import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Upload, Loader2, Copy, Download, X, FileAudio, Clock } from 'lucide-react'
-import { upload } from '@vercel/blob/client'
 import toast from 'react-hot-toast'
+import { upload } from '@vercel/blob/client'
 
 interface TranscriptionResponse {
   text: string
