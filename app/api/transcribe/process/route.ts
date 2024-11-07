@@ -33,8 +33,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: '未授权' }, { status: 401 })
   }
 
+  let taskId: string | undefined
   try {
-    const { taskId } = await request.json()
+    const body = await request.json()
+    taskId = body.taskId
+
+    if (!taskId) {
+      return NextResponse.json({ error: '缺少任务ID' }, { status: 400 })
+    }
 
     const task = await prisma.transcriptionTask.findUnique({
       where: { id: taskId },
@@ -100,13 +106,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('处理转录任务失败:', error)
-    await prisma.transcriptionTask.update({
-      where: { id: taskId },
-      data: {
-        status: 'failed',
-        error: '转录处理失败'
+    // 只有在 taskId 存在且有效时才尝试更新任务状态
+    if (typeof taskId === 'string') {
+      try {
+        await prisma.transcriptionTask.update({
+          where: { id: taskId },
+          data: {
+            status: 'failed',
+            error: '转录处理失败'
+          }
+        })
+      } catch (updateError) {
+        console.error('更新任务状态失败:', updateError)
       }
-    })
+    }
     return NextResponse.json(
       { error: '处理转录任务失败' },
       { status: 500 }

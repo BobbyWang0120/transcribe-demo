@@ -6,12 +6,6 @@ import { Upload, Loader2, Copy, Download, X, FileAudio, Clock } from 'lucide-rea
 import toast from 'react-hot-toast'
 import { upload } from '@vercel/blob/client'
 
-interface TranscriptionResponse {
-  text: string
-  duration: number
-  language: string
-}
-
 interface TranscriptionState {
   text: string
   file: File | null
