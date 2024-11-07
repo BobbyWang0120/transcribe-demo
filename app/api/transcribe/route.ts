@@ -63,15 +63,15 @@ export async function POST(request: Request) {
     }
 
     // 保存转录记录
-    // await prisma.transcript.create({
-    //   data: {
-    //     userId: session.user.id,
-    //     audioUrl: fileName,
-    //     audioBlobUrl: blobUrl,
-    //     text: transcription.text,
-    //     audioDuration: durationInMinutes,
-    //   },
-    // })
+    await prisma.transcript.create({
+      data: {
+        userId: session.user.id,
+        audioUrl: fileName,
+        audioBlobUrl: blobUrl,
+        text: transcription.text,
+        audioDuration: durationInMinutes,
+      },
+    })
 
     // 记录使用量
     await prisma.usageRecord.create({

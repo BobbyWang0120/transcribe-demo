@@ -54,7 +54,7 @@ export default function TranscriptionTool() {
         handleUploadUrl: '/api/upload',
       })
 
-      const response = await fetch('/api/transcribe', {
+      const createResponse = await fetch('/api/transcribe/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,20 +65,38 @@ export default function TranscriptionTool() {
         }),
       })
 
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || '转录失败')
+      if (!createResponse.ok) {
+        const data = await createResponse.json()
+        throw new Error(data.error || '创建转录任务失败')
       }
 
-      const data: TranscriptionResponse = await response.json()
-      
+      const { taskId } = await createResponse.json()
+
+      let result = null
+      while (!result) {
+        const statusResponse = await fetch(`/api/transcribe/status?taskId=${taskId}`)
+        if (!statusResponse.ok) {
+          throw new Error('检查转录状态失败')
+        }
+
+        const statusData = await statusResponse.json()
+        if (statusData.status === 'completed') {
+          result = statusData
+          break
+        } else if (statusData.status === 'failed') {
+          throw new Error(statusData.error || '转录失败')
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 2000))
+      }
+
       setTranscriptionState(prev => ({
         ...prev,
-        text: data.text,
+        text: result.text,
         blobUrl: blob.url
       }))
       
-      toast.success(`转录完成！音频时长: ${data.duration.toFixed(1)}分钟`)
+      toast.success(`转录完成！音频时长: ${result.duration.toFixed(1)}分钟`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : '转录失败，请重试')
       console.error(error)
